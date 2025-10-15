@@ -1,2 +1,2 @@
 # TaskNest
-Task Management application
+Task management React app.
