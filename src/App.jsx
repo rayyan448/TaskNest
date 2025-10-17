@@ -1,27 +1,55 @@
-import React, { useEffect } from 'react'
-import Taskform from './components/Taskform'
-import Tasklist from './components/Tasklist'
-import Progresstracker from './components/Progresstracker'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import TaskForm from './Components/Taskform';
+import TaskList from './components/TaskList';
+import ProgressTracker from './components/ProgressTracker';
+import './style.css';
 function App() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    // ✅ Load tasks from localStorage when app starts
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
 
+  // ✅ Save tasks to localStorage whenever tasks change
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
-  });
+  }, [tasks]);
+
+  // ✅ Add new task
   const addTask = (task) => {
     setTasks([...tasks, task]);
-  }
+  };
+
+
+  const updateTask = (updatedTask, index) => {
+    const newTask = [...tasks];
+    newTask[index] = updatedTask;
+    setTasks(newTask);
+  };
+
+
+  const deleteTask = (index) => {
+    setTasks(tasks.filter((_, i) => i !== index));
+  };
+
+  // ✅ Clear all tasks
+  const clearAllTasks = () => {
+    setTasks([]);
+    localStorage.removeItem("tasks");
+  };
+
   return (
     <div>
       <h1>Task Nest</h1>
-      <p>Our friendly TaskManager</p>
-      <Taskform addTask={addTask}/>
-      <Tasklist />
-      <Progresstracker />
-      <button>Clear All Tasks</button>
+      <p>Your friendly Task Manager</p>
+
+      <TaskForm addTask={addTask} />
+      <TaskList tasks={tasks} updateTask={updateTask} deleteTask={deleteTask} />
+      <ProgressTracker tasks={tasks} />
+
+      <button onClick={clearAllTasks}>Clear All Tasks</button>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

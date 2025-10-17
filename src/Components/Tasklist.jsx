@@ -1,9 +1,35 @@
-import React from 'react'
+import React from 'react';
 
-export default function () {
+export default function TaskList({ tasks, updateTask, deleteTask }) {
+  const toggleComplete = (index) => {
+    const updatedTask = { ...tasks[index], completed: !tasks[index].completed };
+    updateTask(updatedTask, index);
+  };
+
   return (
-    <div>
-        <h1>This is our Tasklist Component</h1>
-    </div>
-  )
+    <ul>
+      {tasks.map((task, index) => (
+        <li key={index}>
+          <div>
+            <span
+              style={{
+                textDecoration: task.completed ? "line-through" : "none",
+                color: task.completed ? "gray" : "black",
+              }}
+            >
+              {task.text}{' '}
+              <small>({task.priority}, {task.category})</small>
+            </span>
+          </div>
+
+          <div>
+            <button onClick={() => toggleComplete(index)}>
+              {task.completed ? "Undo" : "Complete"}
+            </button>
+            <button onClick={() => deleteTask(index)}>Delete</button>
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
 }

@@ -11,7 +11,7 @@ function TaskForm({addTask}) {
         addTask({text: task, priority, category, completed: false})
         setTask("");
         setPriority("medium");
-        setCategory("general");
+        setCategory("general"); 
     }
     return (
         <form action="" onSubmit={handleSubmit}>
