@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import TaskForm from './Components/Taskform';
 import TaskList from './components/TaskList';
-import ProgressTracker from './components/ProgressTracker';
+import ProgressTracker from './Components/Progresstracker';
 import './style.css';
 function App() {
   const [tasks, setTasks] = useState(() => {
@@ -32,7 +32,6 @@ function App() {
     setTasks(tasks.filter((_, i) => i !== index));
   };
 
-  // ✅ Clear all tasks
   const clearAllTasks = () => {
     setTasks([]);
     localStorage.removeItem("tasks");
@@ -40,14 +39,17 @@ function App() {
 
   return (
     <div>
+      <header>
       <h1>Task Nest</h1>
       <p>Your friendly Task Manager</p>
-
+      </header>
       <TaskForm addTask={addTask} />
       <TaskList tasks={tasks} updateTask={updateTask} deleteTask={deleteTask} />
       <ProgressTracker tasks={tasks} />
-
-      <button onClick={clearAllTasks}>Clear All Tasks</button>
+      {tasks.length > 0 && (
+        <button onClick={clearAllTasks} className="clear">Clear All Tasks</button>
+      )}
+      
     </div>
   );
 }
