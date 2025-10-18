@@ -1,16 +1,17 @@
 {
   "name": "task_nest",
+  "homepage": "https://rayyan448.github.io/TaskNest",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://rayyan448.github.io/TaskNest",
+  
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "react": "^19.1.1",
